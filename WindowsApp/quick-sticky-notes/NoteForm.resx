@@ -152,7 +152,7 @@
   <data name="notesListBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAH5JREFUOE/Fk1EKgDAMQ3cB9dqKB1ZRqGnXQV3Htg/FB6FpiP2a4RWIaIE2qAfu
+        vAAADrwBlbxySQAAAH5JREFUOE/Fk1EKgDAMQ3cB9dqKB1ZRqGnXQV3Htg/FB6FpiP2a4RWIaIE2qAfu
         zfppBMEBDbpWQW+Cdl0jCEhtF65vg+R55kgBWC+4oMG3B5LnmSMFYL3gggbfHkieZ44UgPWCCxqUDvBL
         HHWtgl7xJa7QBfVwQs9/4UdCuAFNShEsVO33egAAAABJRU5ErkJggg==
 </value>
@@ -214,7 +214,7 @@
   <data name="boldToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAALRJREFUOE/NkDEKAjEQRdOKrTaipRfwCGKh5/AOit7HQhtLL2Bh7RVEkcVGsNc3
+        vAAADrwBlbxySQAAALRJREFUOE/NkDEKAjEQRdOKrTaipRfwCGKh5/AOit7HQhtLL2Bh7RVEkcVGsNc3
         zgYmu0m2sfDBg58hfJJxv+Sd8YVHnGISuZiihWO8YLIkV+CZ4EljHVvgny7uZVDSRvlOlFTBQQYlMzxr
         rGMLYozwifPvKUJTgSxyiVccyqBKU4FngVuNIbZAstUusoOFxpBcgV1kD28aQ2xBjjVuNIY0FXRxhXfs
         y6CKfXLMB+5wgH+Dcx8CQTvSgmAbNAAAAABJRU5ErkJggg==
@@ -223,14 +223,14 @@
   <data name="italicToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAEpJREFUOE9jGNTgLhD/R8IPgZhkIAHEzyFM8oAvEG+CMMkDDUBcD2GSBzYDsQ+E
+        vAAADrwBlbxySQAAAEpJREFUOE9jGNTgLhD/R8IPgZhkIAHEzyFM8oAvEG+CMMkDDUBcD2GSBzYDsQ+E
         SR54BsSSECbpQAqIn0KY5IGRHIBUScL0AgwMAIM7E23w/UC3AAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="underlineToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAF9JREFUOE9jGJTgP5TGBvDJwcGoAVQw4DkQS0CYKEAKiJ9BmPjBCiCugDBRQDUQ
+        vAAADrwBlbxySQAAAF9JREFUOE9jGJTgP5TGBvDJwcGoAVQw4DkQS0CYKEAKiJ9BmPjBCiCugDBRQDUQ
         L4Uw8QM5IH4BxCBDRIFYDIiroGIyQEwUABmyGojfQPEqIJYFYtoDUCgTgwcNYGAAAFp/ILmJaP+AAAAA
         AElFTkSuQmCC
 </value>
@@ -238,7 +238,7 @@
   <data name="strikethroughToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAACdJREFUOE9jGFTgPwmYaECSYmxgiBoA0oQLkwzI0oQMRg0YAoCBAQDGJRrm/lKD
+        vAAADrwBlbxySQAAACdJREFUOE9jGFTgPwmYaECSYmxgiBoA0oQLkwzI0oQMRg0YAoCBAQDGJRrm/lKD
         xwAAAABJRU5ErkJggg==
 </value>
   </data>
@@ -252,7 +252,7 @@
   <data name="superscriptToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAJBJREFUOE9jGHIgCIgfAfEtIPYCCZAKngKxJRBbA/F9kAAyWAbEMyFMFAASWwph
+        vAAADrwBlbxySQAAAJBJREFUOE9jGHIgCIgfAfEtIPYCCZAKngKxJRBbA/F9kAAyWAbEMyFMFAASWwph
         wkEBEJ+HMBGAG4ivAnECmAcBIDZIDCQHAhZAvAOIQZoVQQLoQBuIX0FpZDYM/EfDWAHI1utQjOwaksBt
         KCYLUOQCvGHw//9/FIwOCMYCIQPmQzE6gIsTMoAgGHgDMAEDAwCAxlz7R/dTDwAAAABJRU5ErkJggg==
 </value>
@@ -292,7 +292,7 @@
   <data name="resizeBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAEdJREFUKFONjgEKACAIA/v/K/zpykCYZqvBQVeDNgBIzAyOn9sCQ+W+0LDTPVw5
+        vAAADrwBlbxySQAAAEdJREFUKFONjgEKACAIA/v/K/zpykCYZqvBQVeDNgBIzAyOn9sCQ+W+0LDTPVw5
         LnhjdVX2fG2OJOfCE7mxuty4kjy+iAgHJkZheMNhkO7sAAAAAElFTkSuQmCC
 </value>
   </data>

@@ -37,6 +37,18 @@ namespace quick_sticky_notes
             fm.UpdateNote += Fm_UpdateNote;
             fm.SignStatusChanged += Fm_SignStatusChanged;
             fm.LoadUserFromDisk();
+            StateManager.InitToolStripMenuItem(tsmsState, (o, e) => {
+                var tsmsItem = o as ToolStripMenuItem;
+                if (notesListBox.Items.Count > 0 && notesListBox.SelectedItem != null)
+                {
+                    Note note = notesListBox.SelectedItem as Note;
+
+                    note.Hide();
+                    note.ChangeState(tsmsItem.Text);
+
+                    notesListBox.Invalidate();
+                }
+            });
         }
 
         private void closeBtn_MouseEnter(object sender, EventArgs e)
@@ -79,11 +91,16 @@ namespace quick_sticky_notes
             e.Note.ShowNotesList += Note_ShowNotesList;
             e.Note.ColorChanged += Note_ColorChanged;
             e.Note.FolderChanged += Note_FolderChanged;
-
+            e.Note.StateChanged += Note_StateChanged;
             if (e.Note.visible && e.Note.folderName != noteManager.trashFolderId)
             {
                 e.Note.Show();
             }
+        }
+
+        private void Note_StateChanged(object sender, EventArgs e)
+        {
+            noteManager.SaveNoteToDisk(sender as Note);
         }
 
         private void Note_FolderChanged(object sender, EventArgs e)
@@ -385,15 +402,18 @@ namespace quick_sticky_notes
                     e.Bounds.Height - 17
                 ));
 
-                if (note.title.Length > 100)
+                if (note.title.Length > 8)
                 {
-                    e.Graphics.DrawString(note.title.Substring(0, 100), e.Font, darkBrush, e.Bounds.X + 16, e.Bounds.Y + 21);
+                    e.Graphics.DrawString(note.title.Substring(0, 8)+"..", e.Font, darkBrush, e.Bounds.X + 16, e.Bounds.Y + 21);
                 }
                 else
                 {
                     e.Graphics.DrawString(note.title, e.Font, darkBrush, e.Bounds.X + 16, e.Bounds.Y + 21);
                 }
+                e.Graphics.DrawString(note.dateCreated.ToString("yyyy-MM-dd HH"), e.Font, darkBrush, e.Bounds.X + 150, e.Bounds.Y + 21);
+                var color = StateManager.GetStateColor(note.state);
                 
+                e.Graphics.FillEllipse(new SolidBrush(color), new RectangleF(e.Bounds.Right-50, e.Bounds.Y+21,20,20));
                 if (note.contentText.Length > 100)
                 {
                     e.Graphics.DrawString(Regex.Replace(note.contentText.Substring(0, 100), @"\t|\n|\r", " "), e.Font, middleBrush, e.Bounds.X + 16, e.Bounds.Y + 39);
@@ -722,6 +742,31 @@ namespace quick_sticky_notes
 
                 notesListBox.Invalidate();
             }
+        }
+
+        private void btOpt_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip1.Show(btOpt.Right,btOpt.Bottom);
+        }
+
+        private void toolStripComboBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripComboBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripComboBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripComboBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

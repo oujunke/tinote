@@ -1,1 +1,2 @@
-WindowsApp/quick-sticky-notes/bin/Debug/firebaseAdminCredentials.json
+bin/
+/WindowsApp/.vs/

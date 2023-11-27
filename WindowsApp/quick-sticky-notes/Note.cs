@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace quick_sticky_notes
@@ -9,7 +10,8 @@ namespace quick_sticky_notes
 		public string title = "New note";
 		public string contentRtf = "Take a note...";
 		public string contentText = "Take a note...";
-		public bool visible = false;
+		public int state = 0;
+        public bool visible = false;
 		public DateTime dateCreated;
 		public DateTime syncDate;
 		public int x = -1;
@@ -19,6 +21,7 @@ namespace quick_sticky_notes
 		public string colorStr = "yellow";
 		public string folderName = "";
 		public bool deleted = false;
+		public DateTime[] Times;
 		private NoteForm noteForm;
 
 		public Note(string uniqueId, string colorStr, DateTime dateCreated)
@@ -26,7 +29,9 @@ namespace quick_sticky_notes
 			this.uniqueId = uniqueId;
 			this.colorStr = colorStr;
 			this.dateCreated = dateCreated;
-		}
+			Times = new DateTime[5];
+
+        }
 
 		public void ChangeFolder(string folderName)
 		{
@@ -38,8 +43,18 @@ namespace quick_sticky_notes
 				OnPerformSync(EventArgs.Empty);
 			}
 		}
+        public void ChangeState(string state)
+        {
+			var s = StateManager.GetStateInt(state);
+            if (s != this.state)
+            {
+                this.state = s;
 
-		public void SetTitle(string title)
+                OnStateChanged(EventArgs.Empty);
+                OnPerformSync(EventArgs.Empty);
+            }
+        }
+        public void SetTitle(string title)
 		{
 			if (title != this.title)
 			{
@@ -88,12 +103,13 @@ namespace quick_sticky_notes
 		{
 			noteForm.Focus();
 		}
+		
 
-		public void Show()
+        public void Show()
 		{
 			if (noteForm == null || noteForm.IsDisposed)
 			{
-				noteForm = new NoteForm(title, contentRtf, colorStr, dateCreated);
+				noteForm = new NoteForm(title, contentRtf, colorStr,state ,dateCreated);
 				noteForm.ContentChanged += NoteForm_ContentChanged;
 				noteForm.TitleChanged += NoteForm_TitleChanged;
 				noteForm.FormClosing += NoteForm_FormClosing;
@@ -103,8 +119,9 @@ namespace quick_sticky_notes
 				noteForm.PerformSync += NoteForm_PerformSync;
 				noteForm.ShowNotesList += NoteForm_ShowNotesList;
 				noteForm.ColorChanged += NoteForm_ColorChanged;
+                noteForm.StateChanged += NoteForm_StateChanged;
 
-				if (syncDate != DateTime.MinValue)
+                if (syncDate != DateTime.MinValue)
 				{
 					noteForm.SetSyncDate(syncDate);
 				}
@@ -128,7 +145,13 @@ namespace quick_sticky_notes
 			}
 		}
 
-		public void SetSyncDate(DateTime syncDate)
+        private void NoteForm_StateChanged(object sender, StateChangedEventArgs e)
+        {
+			this.state = e.State;
+			StateChanged?.Invoke(this,null);
+        }
+
+        public void SetSyncDate(DateTime syncDate)
 		{
 			if (syncDate != this.syncDate)
 			{
@@ -295,8 +318,12 @@ namespace quick_sticky_notes
 			PerformSync?.Invoke(this, e);
 		}
 		public event EventHandler<EventArgs> PerformSync;
-
-		protected virtual void OnShowNotesList(EventArgs e)
+        public event EventHandler<EventArgs> StateChanged;
+        protected virtual void OnStateChanged(EventArgs e)
+        {
+            StateChanged?.Invoke(this, e);
+        }
+        protected virtual void OnShowNotesList(EventArgs e)
 		{
 			ShowNotesList?.Invoke(this, e);
 		}
@@ -313,7 +340,8 @@ namespace quick_sticky_notes
 			ColorChanged?.Invoke(this, e);
 		}
 		public event EventHandler<ColorChangedEventArgs> ColorChanged;
-	}
+        
+    }
 
 	public class VisibleChangedEventArgs : EventArgs
 	{

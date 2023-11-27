@@ -9,6 +9,7 @@ namespace quick_sticky_notes
 	public partial class NoteForm : Form
 	{
 		private string colorStr;
+		private int state;
 
 		private System.Timers.Timer resizeTimer = new System.Timers.Timer();
 
@@ -26,7 +27,7 @@ namespace quick_sticky_notes
 			}
 		}
 
-		public NoteForm(string title, string content, string colorStr, DateTime dateCreated)
+		public NoteForm(string title, string content, string colorStr,int state, DateTime dateCreated)
 		{
 			InitializeComponent();
 
@@ -54,6 +55,16 @@ namespace quick_sticky_notes
 			toggleBulletsToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Comma";
 			superscriptToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Shift+Plus";
 			subscriptToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Plus";
+			this.state = state;
+			InitState();
+			StateManager.InitToolStripMenuItem(tsmlState, (o, e) =>
+			{
+				var tsmlItem = o as ToolStripMenuItem;
+                this.state = StateManager.GetStateInt(tsmlItem.Text);
+                InitState();
+                StateChanged?.Invoke(this, new StateChangedEventArgs { State = this.state });
+            });
+			TopMost = true;
 		}
 
 		public void SetSyncDate(DateTime syncDate)
@@ -130,8 +141,8 @@ namespace quick_sticky_notes
 			ColorChanged?.Invoke(this, e);
 		}
 		public event EventHandler<ColorChangedEventArgs> ColorChanged;
-
-		private void NoteForm_Activated(object sender, EventArgs e)
+        public event EventHandler<StateChangedEventArgs> StateChanged;
+        private void NoteForm_Activated(object sender, EventArgs e)
 		{
 			ShowTitlebar(true);
 			richTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical;
@@ -673,9 +684,20 @@ namespace quick_sticky_notes
 
 			customScrollbar1.Value = x1;
 		}
-	}
+		private void InitState()
+		{
+			Image image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+			Graphics graphics = Graphics.FromImage(image);
+            var color = StateManager.GetStateColor(state);
 
-	public class ContentChangedEventArgs : EventArgs
+            graphics.FillEllipse(new SolidBrush(color), new RectangleF(0,0, pictureBox1.Width, pictureBox1.Width));
+			graphics.Dispose();
+			pictureBox1.Image = image;
+
+        }
+    }
+
+    public class ContentChangedEventArgs : EventArgs
 	{
 		public string Rtf { get; set; }
 		public string Text { get; set; }
@@ -695,4 +717,8 @@ namespace quick_sticky_notes
 	{
 		public string ColorStr { get; set; }
 	}
+    public class StateChangedEventArgs : EventArgs
+    {
+        public int State { get; set; }
+    }
 }
