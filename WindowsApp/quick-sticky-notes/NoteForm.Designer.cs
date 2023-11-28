@@ -564,7 +564,9 @@
             this.richTextBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox1_LinkClicked);
             this.richTextBox1.VScroll += new System.EventHandler(this.richTextBox1_VScroll);
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.richTextBox1.DoubleClick += new System.EventHandler(this.richTextBox1_DoubleClick);
             this.richTextBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyUp);
+            this.richTextBox1.MouseLeave += new System.EventHandler(this.richTextBox1_MouseLeave);
             // 
             // customScrollbar1
             // 

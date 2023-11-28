@@ -42,6 +42,8 @@
             this.purpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.whiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmsState = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notesListEmptyContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,8 +82,6 @@
             this.toolStripComboBox2 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripComboBox3 = new System.Windows.Forms.ToolStripComboBox();
             this.btOpt = new System.Windows.Forms.Button();
-            this.tsmsState = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.notesListItemContext.SuspendLayout();
             this.notesListEmptyContext.SuspendLayout();
             this.trayContext.SuspendLayout();
@@ -110,6 +110,8 @@
             this.notesListBox.TabIndex = 12;
             this.notesListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.notesListBox_DrawItem);
             this.notesListBox.DoubleClick += new System.EventHandler(this.notesListBox_DoubleClick_1);
+            this.notesListBox.MouseLeave += new System.EventHandler(this.notesListBox_MouseLeave);
+            this.notesListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.notesListBox_MouseMove);
             this.notesListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.notesListBox_MouseUp);
             // 
             // notesListItemContext
@@ -158,7 +160,7 @@
             this.yellowToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(231)))), ((int)(((byte)(128)))));
             this.yellowToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(115)))), ((int)(((byte)(64)))));
             this.yellowToolStripMenuItem.Name = "yellowToolStripMenuItem";
-            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
             this.yellowToolStripMenuItem.Text = "Yellow";
             this.yellowToolStripMenuItem.Click += new System.EventHandler(this.yellowToolStripMenuItem_Click);
             // 
@@ -167,7 +169,7 @@
             this.greenToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(132)))), ((int)(((byte)(219)))), ((int)(((byte)(193)))));
             this.greenToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(109)))), ((int)(((byte)(96)))));
             this.greenToolStripMenuItem.Name = "greenToolStripMenuItem";
-            this.greenToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.greenToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
             this.greenToolStripMenuItem.Text = "Green";
             this.greenToolStripMenuItem.Click += new System.EventHandler(this.greenToolStripMenuItem_Click);
             // 
@@ -176,7 +178,7 @@
             this.blueToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(194)))), ((int)(((byte)(255)))));
             this.blueToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(97)))), ((int)(((byte)(127)))));
             this.blueToolStripMenuItem.Name = "blueToolStripMenuItem";
-            this.blueToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.blueToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
             this.blueToolStripMenuItem.Text = "Blue";
             this.blueToolStripMenuItem.Click += new System.EventHandler(this.blueToolStripMenuItem_Click);
             // 
@@ -185,7 +187,7 @@
             this.pinkToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(163)))), ((int)(((byte)(209)))));
             this.pinkToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(81)))), ((int)(((byte)(104)))));
             this.pinkToolStripMenuItem.Name = "pinkToolStripMenuItem";
-            this.pinkToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.pinkToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
             this.pinkToolStripMenuItem.Text = "Pink";
             this.pinkToolStripMenuItem.Click += new System.EventHandler(this.pinkToolStripMenuItem_Click);
             // 
@@ -194,7 +196,7 @@
             this.purpleToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(164)))), ((int)(((byte)(255)))));
             this.purpleToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(82)))), ((int)(((byte)(127)))));
             this.purpleToolStripMenuItem.Name = "purpleToolStripMenuItem";
-            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.purpleToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
             this.purpleToolStripMenuItem.Text = "Purple";
             this.purpleToolStripMenuItem.Click += new System.EventHandler(this.purpleToolStripMenuItem_Click);
             // 
@@ -203,7 +205,7 @@
             this.whiteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(249)))), ((int)(((byte)(249)))));
             this.whiteToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(124)))), ((int)(((byte)(124)))));
             this.whiteToolStripMenuItem.Name = "whiteToolStripMenuItem";
-            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.whiteToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
             this.whiteToolStripMenuItem.Text = "White";
             this.whiteToolStripMenuItem.Click += new System.EventHandler(this.whiteToolStripMenuItem_Click);
             // 
@@ -211,6 +213,17 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
+            // 
+            // tsmsState
+            // 
+            this.tsmsState.Name = "tsmsState";
+            this.tsmsState.Size = new System.Drawing.Size(172, 26);
+            this.tsmsState.Text = "改变状态";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(169, 6);
             // 
             // deleteToolStripMenuItem
             // 
@@ -625,17 +638,6 @@
             this.btOpt.UseVisualStyleBackColor = true;
             this.btOpt.Click += new System.EventHandler(this.btOpt_Click);
             // 
-            // tsmsState
-            // 
-            this.tsmsState.Name = "tsmsState";
-            this.tsmsState.Size = new System.Drawing.Size(172, 26);
-            this.tsmsState.Text = "改变状态";
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(169, 6);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -655,6 +657,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.Opacity = 0D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tinote";
             this.Activated += new System.EventHandler(this.MainForm_Activated);

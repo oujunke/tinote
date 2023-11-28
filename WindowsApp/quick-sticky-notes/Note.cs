@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,9 +8,9 @@ namespace quick_sticky_notes
 	public class Note
 	{
 		public string uniqueId;
-		public string title = "New note";
-		public string contentRtf = "Take a note...";
-		public string contentText = "Take a note...";
+		public string title = string.Empty;
+		public string contentRtf = string.Empty;
+		public string contentText = string.Empty;
 		public int state = 0;
         public bool visible = false;
 		public DateTime dateCreated;
@@ -23,14 +24,15 @@ namespace quick_sticky_notes
 		public bool deleted = false;
 		public DateTime[] Times;
 		private NoteForm noteForm;
-
-		public Note(string uniqueId, string colorStr, DateTime dateCreated)
+		[JsonIgnore]
+		public NoteForm NoteForm { get => noteForm; }
+        public Note(string uniqueId, string colorStr, DateTime dateCreated)
 		{
 			this.uniqueId = uniqueId;
 			this.colorStr = colorStr;
 			this.dateCreated = dateCreated;
 			Times = new DateTime[5];
-
+			title = $"新建笔记-{dateCreated:yyyy-MM-dd HH}";
         }
 
 		public void ChangeFolder(string folderName)
@@ -49,7 +51,7 @@ namespace quick_sticky_notes
             if (s != this.state)
             {
                 this.state = s;
-
+				Times[s - 1] = DateTime.Now;
                 OnStateChanged(EventArgs.Empty);
                 OnPerformSync(EventArgs.Empty);
             }

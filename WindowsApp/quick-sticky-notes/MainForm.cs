@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace quick_sticky_notes
 {
-	public partial class MainForm : Form
-	{
+    public partial class MainForm : Form
+    {
         private FirebaseManager fm;
         private NoteManager noteManager;
         private bool quitApp = false;
@@ -27,9 +28,8 @@ namespace quick_sticky_notes
         public MainForm()
         {
             InitializeComponent();
-
-            this.Hide();
-
+            //this.Hide();
+            //Visible = false;
             noteManager = new NoteManager();
             noteManager.NoteAdded += NoteManager_NoteAdded;
 
@@ -37,7 +37,8 @@ namespace quick_sticky_notes
             fm.UpdateNote += Fm_UpdateNote;
             fm.SignStatusChanged += Fm_SignStatusChanged;
             fm.LoadUserFromDisk();
-            StateManager.InitToolStripMenuItem(tsmsState, (o, e) => {
+            StateManager.InitToolStripMenuItem(tsmsState, (o, e) =>
+            {
                 var tsmsItem = o as ToolStripMenuItem;
                 if (notesListBox.Items.Count > 0 && notesListBox.SelectedItem != null)
                 {
@@ -49,6 +50,8 @@ namespace quick_sticky_notes
                     notesListBox.Invalidate();
                 }
             });
+            var res1 = HotKey.RegisterHotKey(Handle, 101, HotKey.KeyModifiers.Ctrl | HotKey.KeyModifiers.Alt, Keys.N);
+            var res2 = HotKey.RegisterHotKey(Handle, 102, HotKey.KeyModifiers.Ctrl | HotKey.KeyModifiers.Shift, Keys.N);
         }
 
         private void closeBtn_MouseEnter(object sender, EventArgs e)
@@ -74,13 +77,13 @@ namespace quick_sticky_notes
 
         private void NoteManager_NoteAdded(object sender, NoteAddedEventArgs e)
         {
-            notesListBox.Invoke((MethodInvoker)(() => {
+            notesListBox.Invoke((MethodInvoker)(() =>
+            {
                 if (noteManager.currentFolder == e.Note.folderName)
                 {
                     notesListBox.Items.Add(e.Note);
                 }
             }));
-
             e.Note.ContentChanged += Note_ContentChanged;
             e.Note.TitleChanged += Note_TitleChanged;
             e.Note.VisibleChanged += Note_VisibleChanged;
@@ -105,7 +108,8 @@ namespace quick_sticky_notes
 
         private void Note_FolderChanged(object sender, EventArgs e)
         {
-            notesListBox.Invoke((MethodInvoker)(() => {
+            notesListBox.Invoke((MethodInvoker)(() =>
+            {
                 notesListBox.Items.Clear();
                 List<Note> ln = noteManager.SearchFor();
                 for (int i = 0; i < ln.Count; i++)
@@ -263,11 +267,17 @@ namespace quick_sticky_notes
                 }
             }
         }
-
+        public void HideWin()
+        {
+            Visible = false;
+            ShowInTaskbar = true;
+            Opacity = 1;
+        }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.BeginInvoke(new MethodInvoker(HideWin));
             noteManager.LoadNotesFromDisk();
-            
+
             if (fm.IsLoggedIn())
             {
                 //fm.LoadNotesFromServer();
@@ -301,11 +311,16 @@ namespace quick_sticky_notes
                 e.Cancel = true;
                 this.Hide();
             }
+            else
+            {
+                HotKey.UnregisterHotKey(Handle, 101);
+                HotKey.UnregisterHotKey(Handle, 102);
+            }
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            this.Hide();
+            //this.Hide();
         }
 
         private void notesListToolStripMenuItem_Click(object sender, EventArgs e)
@@ -328,7 +343,35 @@ namespace quick_sticky_notes
                 this.BringToFront();
             }
         }
+        const int WM_HOTKEY = 0x0312;
+        protected override void WndProc(ref Message m)
+        {
 
+            //按快捷键 
+            switch (m.Msg)
+            {
+                case WM_HOTKEY:
+                    switch (m.WParam.ToInt32())
+                    {
+                        case 100:    //按下的是Shift+S
+                                     //此处填写快捷键响应代码 
+                            break;
+                        case 101:
+                            {//按下的是Ctrl+B
+                             //此处填写快捷键响应代码
+                             //MessageBox.Show("hot key");
+                                noteManager.NewNote(fm.GenerateUniqueID());
+                            }
+                            break;
+                        case 102:    //按下的是Alt+D
+                                     //此处填写快捷键响应代码
+                            this.Show();
+                            break;
+                    }
+                    break;
+            }
+            base.WndProc(ref m);
+        }
         private void titlePanel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -404,7 +447,7 @@ namespace quick_sticky_notes
 
                 if (note.title.Length > 8)
                 {
-                    e.Graphics.DrawString(note.title.Substring(0, 8)+"..", e.Font, darkBrush, e.Bounds.X + 16, e.Bounds.Y + 21);
+                    e.Graphics.DrawString(note.title.Substring(0, 8) + "..", e.Font, darkBrush, e.Bounds.X + 16, e.Bounds.Y + 21);
                 }
                 else
                 {
@@ -412,8 +455,8 @@ namespace quick_sticky_notes
                 }
                 e.Graphics.DrawString(note.dateCreated.ToString("yyyy-MM-dd HH"), e.Font, darkBrush, e.Bounds.X + 150, e.Bounds.Y + 21);
                 var color = StateManager.GetStateColor(note.state);
-                
-                e.Graphics.FillEllipse(new SolidBrush(color), new RectangleF(e.Bounds.Right-50, e.Bounds.Y+21,20,20));
+
+                e.Graphics.FillEllipse(new SolidBrush(color), new RectangleF(e.Bounds.Right - 50, e.Bounds.Y + 21, 20, 20));
                 if (note.contentText.Length > 100)
                 {
                     e.Graphics.DrawString(Regex.Replace(note.contentText.Substring(0, 100), @"\t|\n|\r", " "), e.Font, middleBrush, e.Bounds.X + 16, e.Bounds.Y + 39);
@@ -746,7 +789,7 @@ namespace quick_sticky_notes
 
         private void btOpt_Click(object sender, EventArgs e)
         {
-            contextMenuStrip1.Show(btOpt.Right,btOpt.Bottom);
+            contextMenuStrip1.Show(btOpt.Right, btOpt.Bottom);
         }
 
         private void toolStripComboBox1_TextChanged(object sender, EventArgs e)
@@ -767,6 +810,89 @@ namespace quick_sticky_notes
         private void toolStripComboBox3_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void notesListBox_MouseHover(object sender, EventArgs e)
+        {
+            Debug.WriteLine("notesListBox_MouseHover");
+            //int num = notesListBox.IndexFromPoint(currPoint);
+            //if (num >= 0 && num < notesListBox.Items.Count)
+            //{
+            //    currNote = notesListBox.Items[num] as Note;
+
+            //    if (currNote.folderName == noteManager.trashFolderId)
+            //    {
+            //        currNote.ChangeFolder(noteManager.noFolderId);
+            //        currNote.Show();
+
+            //        currNote.NoteForm.Location = notesListBox.Location;
+            //        allNotesBtn.PerformClick();
+            //    }
+            //    else
+            //    {
+            //        if (currNote.visible)
+            //        {
+            //            currNote.Focus();
+            //        }
+            //        else
+            //        {
+            //            currNote.Show();
+            //        }
+            //    }
+            //}
+        }
+        Note currNote;
+        int currNoteIndex;
+        private void notesListBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            return;
+            int num = notesListBox.IndexFromPoint(e.Location);
+            if (num >= 0 && num < notesListBox.Items.Count)
+            {
+                if (currNoteIndex == num)
+                {
+                    return;
+                }
+                currNoteIndex = num;
+                if (currNote != null)
+                {
+                    currNote.Hide();
+                }
+                currNote = notesListBox.Items[num] as Note;
+                var point = notesListBox.PointToScreen(e.Location);
+                var po = new Point(this.Right, point.Y);
+                if (currNote.folderName == noteManager.trashFolderId)
+                {
+                    currNote.ChangeFolder(noteManager.noFolderId);
+                    currNote.Show();
+
+                    currNote.NoteForm.Location = po;
+                    allNotesBtn.PerformClick();
+                }
+                else
+                {
+                    if (currNote.visible)
+                    {
+                        currNote.Focus();
+                        currNote.NoteForm.Location = po;
+                    }
+                    else
+                    {
+                        currNote.Show();
+                        currNote.NoteForm.Location = po;
+                    }
+                }
+            }
+        }
+
+        private void notesListBox_MouseLeave(object sender, EventArgs e)
+        {
+            if (currNote != null)
+            {
+                currNote.Hide();
+                currNote = null;
+            }
+            currNoteIndex = -1;
         }
     }
 }

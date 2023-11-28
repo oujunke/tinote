@@ -1,2 +1,6 @@
 bin/
-/WindowsApp/.vs/
+.vs/
+packages/
+obj/
+/WindowsApp/quick-sticky-notes/bin
+/WindowsApp/quick-sticky-notes/obj
