@@ -365,7 +365,15 @@ namespace quick_sticky_notes
                             break;
                         case 102:    //按下的是Alt+D
                                      //此处填写快捷键响应代码
-                            this.Show();
+                            if (this.Visible)
+                            {
+                                this.Hide();
+                            }
+                            else
+                            {
+                                UpdateItem();
+                                this.Show();
+                            }
                             break;
                     }
                     break;
@@ -524,21 +532,25 @@ namespace quick_sticky_notes
         {
             if (searchTextBox.Text.Length > 0 && searchTextBox.Text != "Search your notes...")
             {
-                notesListBox.Items.Clear();
-                List<Note> ln = noteManager.SearchFor(searchTextBox.Text);
-                for (int i = 0; i < ln.Count; i++)
-                {
-                    notesListBox.Items.Add(ln[i]);
-                }
+                UpdateItem(searchTextBox.Text);
             }
             else
             {
-                notesListBox.Items.Clear();
-                List<Note> ln = noteManager.SearchFor();
-                for (int i = 0; i < ln.Count; i++)
-                {
-                    notesListBox.Items.Add(ln[i]);
-                }
+                UpdateItem();
+            }
+        }
+
+        private void UpdateItem(string search="")
+        {
+            if(search.StartsWith("Search your notes...") ||search.StartsWith("搜索你的笔记..."))
+            {
+                search = "";
+            }
+            notesListBox.Items.Clear();
+            List<Note> ln = noteManager.SearchFor(search);
+            for (int i = 0; i < ln.Count; i++)
+            {
+                notesListBox.Items.Add(ln[i]);
             }
         }
 
@@ -789,27 +801,43 @@ namespace quick_sticky_notes
 
         private void btOpt_Click(object sender, EventArgs e)
         {
-            contextMenuStrip1.Show(btOpt.Right, btOpt.Bottom);
+            //btOpt.PointToScreen();
+            contextMenuStrip1.Show(btOpt,btOpt.Width, btOpt.Height);
         }
-
+        /// <summary>
+        /// 状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripComboBox1_TextChanged(object sender, EventArgs e)
         {
-
+            NoteSort.StateText = toolStripComboBox1.Text;
+            UpdateItem(searchTextBox.Text.Trim());
         }
 
         private void toolStripComboBox2_Click(object sender, EventArgs e)
         {
 
         }
-
+        /// <summary>
+        /// 排序方式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripComboBox2_TextChanged(object sender, EventArgs e)
         {
-
+            NoteSort.SortText = toolStripComboBox2.Text;
+            UpdateItem(searchTextBox.Text.Trim());
         }
-
+        /// <summary>
+        /// 日期筛选
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripComboBox3_TextChanged(object sender, EventArgs e)
         {
-
+            NoteSort.DateText = toolStripComboBox3.Text;
+            UpdateItem(searchTextBox.Text.Trim());
         }
 
         private void notesListBox_MouseHover(object sender, EventArgs e)

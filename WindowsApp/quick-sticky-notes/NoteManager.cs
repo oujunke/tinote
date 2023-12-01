@@ -17,15 +17,9 @@ namespace quick_sticky_notes
         {
             currentFolder = noFolderId;
         }
-        public List<Note> SortList()
-        {
-            var res = notes.ToList();
-            res.Sort(NodeSort.GetNodeSort());
-            return res;
-        }
         public List<Note> SearchFor(string str = "")
         {
-            var ns = SortList();
+            var ns = NoteSort.GetNodeList(notes);
             if (string.IsNullOrEmpty(str))
             {
                 List<Note> res = new List<Note>();
@@ -179,7 +173,7 @@ namespace quick_sticky_notes
                         notes.Add(note);
                     }
                 }
-                var res = SortList();
+                var res = NoteSort.GetNodeList(notes);
                 foreach (var note in res)
                 {
                     NoteAddedEventArgs args = new NoteAddedEventArgs()

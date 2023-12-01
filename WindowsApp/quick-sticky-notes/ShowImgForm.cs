@@ -31,14 +31,19 @@ namespace quick_sticky_notes
             }
             showImgForm.SetImage(image);
             var screen=Screen.FromPoint(point);
-            if (screen.WorkingArea.Width - point.X< image.Width&&point.X < screen.WorkingArea.Left+screen.WorkingArea.Width / 2)
+            var newPonit = new Point(point.X,point.Y);
+            if (screen.WorkingArea.Width - point.X< image.Width&&point.X > screen.WorkingArea.Left+screen.WorkingArea.Width / 2)
             {
-                point.X = screen.WorkingArea.Left;
+                newPonit.X = screen.WorkingArea.Left;
             }
-            showImgForm.Size = new Size(Math.Min(image.Width,screen.WorkingArea.Width-point.X),
-                Math.Min(image.Height, screen.WorkingArea.Height - point.Y));
-            point.X = point.X - showImgForm.Size.Width;
-            showImgForm.Location = point;
+            if(screen.WorkingArea.Height-newPonit.Y< image.Height)
+            {
+                newPonit.Y = Math.Max(screen.WorkingArea.Y, screen.WorkingArea.Y + (screen.WorkingArea.Height - image.Height));
+            }
+            showImgForm.Size = new Size(Math.Min(image.Width,screen.WorkingArea.Width- newPonit.X),
+                Math.Min(image.Height, screen.WorkingArea.Height - newPonit.Y));
+            newPonit.X = point.X - showImgForm.Size.Width;
+            showImgForm.Location = newPonit;
             showImgForm.Show();
         }
         public static void HideForm()
