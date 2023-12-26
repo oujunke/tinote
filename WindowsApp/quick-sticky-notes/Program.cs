@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
 
 namespace quick_sticky_notes
@@ -8,7 +9,9 @@ namespace quick_sticky_notes
 		[STAThread]
 		static void Main()
 		{
-			Application.EnableVisualStyles();
+			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());
 		}

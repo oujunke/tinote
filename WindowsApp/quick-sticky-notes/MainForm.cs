@@ -52,6 +52,7 @@ namespace quick_sticky_notes
             });
             var res1 = HotKey.RegisterHotKey(Handle, 101, HotKey.KeyModifiers.Ctrl | HotKey.KeyModifiers.Alt, Keys.N);
             var res2 = HotKey.RegisterHotKey(Handle, 102, HotKey.KeyModifiers.Ctrl | HotKey.KeyModifiers.Shift, Keys.N);
+            var res3 = HotKey.RegisterHotKey(Handle, 103, HotKey.KeyModifiers.Ctrl | HotKey.KeyModifiers.Alt, Keys.S);
         }
 
         private void closeBtn_MouseEnter(object sender, EventArgs e)
@@ -315,6 +316,7 @@ namespace quick_sticky_notes
             {
                 HotKey.UnregisterHotKey(Handle, 101);
                 HotKey.UnregisterHotKey(Handle, 102);
+                HotKey.UnregisterHotKey(Handle, 103);
             }
         }
 
@@ -374,6 +376,9 @@ namespace quick_sticky_notes
                                 UpdateItem();
                                 this.Show();
                             }
+                            break;
+                        case 103:
+                            noteManager.SetTopMost();
                             break;
                     }
                     break;

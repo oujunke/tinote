@@ -106,7 +106,13 @@ namespace quick_sticky_notes
 			noteForm.Focus();
 		}
 		
-
+		public void SetTopMost(bool top)
+		{
+			if (noteForm != null && !noteForm.IsDisposed)
+			{
+				noteForm.TopMost = top;
+            }
+		}
         public void Show()
 		{
 			if (noteForm == null || noteForm.IsDisposed)

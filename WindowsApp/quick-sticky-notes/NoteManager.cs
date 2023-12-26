@@ -12,7 +12,7 @@ namespace quick_sticky_notes
         public string trashFolderId = "$";
         public string noFolderId = "";
         public string currentFolder;
-
+        public bool currentTopMost = true;
         public NoteManager()
         {
             currentFolder = noFolderId;
@@ -50,6 +50,14 @@ namespace quick_sticky_notes
             }
         }
 
+        public void SetTopMost()
+        {
+            var topMost = currentTopMost = !currentTopMost;
+            foreach (var note in notes)
+            {
+                note.SetTopMost(topMost);
+            }
+        }
         public void NewNote(string uniqueId, string colorStr = "yellow")
         {
             Note note = new Note(uniqueId, colorStr, DateTime.Now);
